@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const contenedor = document.querySelector(".tablero");
   var CartasVolteadas = []; //array con las cartas seleccionadas
   var idCartasVolteadas = []; // array de Id de cartas que hemos cliclado, necesario para luego comprobar si [0] = a [1]
-  var parejas = [];
+  let parejas = [];
   var campoPuntuacion = document.querySelector("#puntos");
 
   //Mostrar las Cartas en pantalla (Por la parte del Dorso)
@@ -86,10 +86,9 @@ document.addEventListener("DOMContentLoaded", () => {
       mensajeAcierto(primeraCarta);
       cartas[primeraCarta].setAttribute("src", "assets/Blanco.png");
       cartas[segundaCarta].setAttribute("src", "assets/Blanco.png");
-
-      console.log(p);
+      console.log(primeraCarta, segundaCarta)
       parejas.push(parseInt(primeraCarta));
-      parejas.push(parseInt(segundaCarta)); //añadir cartas emparejadas a un array para mantener el conteo
+      parejas.push(parseInt(segundaCarta)); // añadir cartas emparejadas a un array para mantener el conteo
       console.log("Parejas Encontradas: " + parejas.length);
       console.log("Id de Parejas Encontradas: " + parejas);
       idCartasVolteadas = []
@@ -131,25 +130,30 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     var idCarta = this.getAttribute("data-id");
+    console.log('parejas: ', parejas)
     console.log("id de la Carta: " + idCarta);
     console.log("indexof Cartas Seleccionadas: " + idCartasVolteadas.indexOf(idCarta));
     console.log("indexof Parejas Acertadas: " + parejas.indexOf(idCarta));
-    if (idCartasVolteadas.indexOf(idCarta) != -1 || parejas.indexOf(idCarta) == 1) {
 
-    } else {
-      CartasVolteadas.push(ArrayCartas[idCarta].nombre);
-      idCartasVolteadas.push(idCarta);
+    console.log(parejas)
 
-      //Cambiar la imagen de la carta seleccionada
-      this.setAttribute("src", ArrayCartas[idCarta].img);
+    if (idCartasVolteadas.indexOf(idCarta) != -1) return
+    if (parejas.indexOf(idCarta) != -1) return
+    console.log('Estoy dentro pasando de tu puto culo')
 
-      // Comprobar si las 2 cartas coinciden, llamando a la funcion
-      if (CartasVolteadas.length == 2) {
-        setTimeout(comprobarPareja, 500);
-        //añadir un bloqueo a los clicks durante el tiempo de ejecuccion de la funcion para que no se levanten mas de 2 cartas mientras se comprueba.
-      }
+    CartasVolteadas.push(ArrayCartas[idCarta].nombre);
+    idCartasVolteadas.push(idCarta);
 
+    //Cambiar la imagen de la carta seleccionada
+    this.setAttribute("src", ArrayCartas[idCarta].img);
+
+    // Comprobar si las 2 cartas coinciden, llamando a la funcion
+    if (CartasVolteadas.length == 2) {
+      setTimeout(comprobarPareja, 500);
+      //añadir un bloqueo a los clicks durante el tiempo de ejecuccion de la funcion para que no se levanten mas de 2 cartas mientras se comprueba.
     }
+
+
 
 
   }
