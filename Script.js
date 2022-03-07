@@ -82,27 +82,30 @@ document.addEventListener("DOMContentLoaded", () => {
     const segundaCarta = idCartasVolteadas[1];
 
     if (CartasVolteadas[0] == CartasVolteadas[1]) {
-      // var popup = document.getElementById("myPopup");
-      // document.getElementById("myPopup").innerHTML = "Acierto +1pts";
-      // popup.classList.toggle("show");
 
-      mensajeAcierto();
-
+      mensajeAcierto(primeraCarta);
       cartas[primeraCarta].setAttribute("src", "assets/Blanco.png");
       cartas[segundaCarta].setAttribute("src", "assets/Blanco.png");
-      parejas.push(CartasVolteadas); //añadir cartas emparejadas a un array para mantener el conteo
+
+      console.log(p);
+      parejas.push(parseInt(primeraCarta));
+      parejas.push(parseInt(segundaCarta)); //añadir cartas emparejadas a un array para mantener el conteo
       console.log("Parejas Encontradas: " + parejas.length);
-    } else {
+      console.log("Id de Parejas Encontradas: " + parejas);
+      idCartasVolteadas = []
+
+    }
+    else {
       cartas[primeraCarta].setAttribute("src", "assets/DorsoCarta.png");
       cartas[segundaCarta].setAttribute("src", "assets/DorsoCarta.png");
+      idCartasVolteadas = []
       mensajeFallo();
     }
 
-    // limpiar Array de Cartas seleccionadas !!!Bug: si se clica muy rapido no se llega a borrar todas
-    idCartasVolteadas = [];
+    // limpiar Array de Cartas seleccionadas 
     CartasVolteadas = [];
 
-    campoPuntuacion.textContent = parejas.length; // En puntuacion se mostrara el numero de cartas emparejadas (modificar mas tarde para dar aespecto de puntos, fuente multiplicador)
+    campoPuntuacion.textContent = parejas.length;
 
     console.log(
       "Cartas Seleccionadas: ",
@@ -113,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Condicion de Victoria
     if (parejas.length == ArrayCartas.length / 2) {
-      alert("FELICIDADES, HAS GANADO!!!!");
+      mensajeVictoria();
     }
   }
 
@@ -123,21 +126,32 @@ document.addEventListener("DOMContentLoaded", () => {
       "Cartas Seleccionadas: ",
       CartasVolteadas,
       " idCartas Seleccionadas: ",
-      idCartasVolteadas
+      idCartasVolteadas,
+      " Id de Parejas Acertadas: " + parejas
     );
 
-    var idCarta = this.getAttribute("data-id"); //se usa data-id y no id pork
-    CartasVolteadas.push(ArrayCartas[idCarta].nombre);
-    idCartasVolteadas.push(idCarta);
+    var idCarta = this.getAttribute("data-id");
+    console.log("id de la Carta: " + idCarta);
+    console.log("indexof Cartas Seleccionadas: " + idCartasVolteadas.indexOf(idCarta));
+    console.log("indexof Parejas Acertadas: " + parejas.indexOf(idCarta));
+    if (idCartasVolteadas.indexOf(idCarta) != -1 || parejas.indexOf(idCarta) == 1) {
 
-    //Cambiar la imagen de la carta seleccionada
-    this.setAttribute("src", ArrayCartas[idCarta].img);
+    } else {
+      CartasVolteadas.push(ArrayCartas[idCarta].nombre);
+      idCartasVolteadas.push(idCarta);
 
-    // Comprobar si las 2 cartas coinciden, llamando a la funcion
-    if (CartasVolteadas.length == 2) {
-      setTimeout(comprobarPareja, 500);
-      //añadir un bloqueo a los clicks durante el tiempo de ejecuccion de la funcion para que no se levanten mas de 2 cartas mientras se comprueba.
+      //Cambiar la imagen de la carta seleccionada
+      this.setAttribute("src", ArrayCartas[idCarta].img);
+
+      // Comprobar si las 2 cartas coinciden, llamando a la funcion
+      if (CartasVolteadas.length == 2) {
+        setTimeout(comprobarPareja, 500);
+        //añadir un bloqueo a los clicks durante el tiempo de ejecuccion de la funcion para que no se levanten mas de 2 cartas mientras se comprueba.
+      }
+
     }
+
+
   }
 
   // inicializar funcion
@@ -154,5 +168,12 @@ function mensajeFallo() {
   var popup = document.getElementById("myPopup");
   document.getElementById("myPopup").innerHTML =
     "Fallaste, vuelve a intentarlo";
+  popup.classList.toggle("show");
+}
+
+function mensajeVictoria() {
+  var popup = document.getElementById("myPopup");
+  document.getElementById("myPopup").innerHTML =
+    "Felicidades, has descubierto todas las parejas";
   popup.classList.toggle("show");
 }
