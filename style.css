@@ -1,0 +1,74 @@
+
+
+*{
+    font-family: 'Press Start 2P', cursive; ;
+}
+
+body{
+    background-image: url("/assets/background.gif");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+
+.tablero{
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+border: 3px solid black;
+    background-image: url(/assets/wallBricks.png);
+    background-size: 128px 128px;
+
+    background-attachment: fixed;
+    background-position: center;
+  
+}
+.carta{
+    margin: 5px;
+    border: 1px black solid;
+}
+
+.score{
+    margin: 15px;
+}
+
+
+/* Css para popUp */
+/* Popup container */
+.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .popup .popuptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+  }
+
+  .popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s
+  }
+
+  @-webkit-keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+  
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+  }
